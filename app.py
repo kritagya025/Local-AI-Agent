@@ -124,5 +124,15 @@ def ask_question():
         response = ask_ai(ai_prompt, "doc_qa")
         return jsonify({"response": response})
 
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.json
+    prompt = data.get('prompt')
+    if not prompt:
+        return jsonify({"error": "No prompt provided"}), 400
+    
+    response = ask_ai(prompt, "chat")
+    return jsonify({"response": response})
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

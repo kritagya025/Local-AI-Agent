@@ -305,6 +305,77 @@
                 loading.style.display = "none";
             }
         }
+        
+        function toggleChat() {
+            const chatWin = document.getElementById("floating-chat");
+            chatWin.classList.toggle("hidden");
+        }
+
+        async function generalChat() {
+            const promptInput = document.getElementById("chat-prompt");
+            const promptValue = promptInput.value;
+            if (!promptValue.trim()) return;
+            
+            const chatOut = document.getElementById("chat-output");
+            
+            // Add User Message
+            chatOut.innerHTML += `<div class="bg-indigo-100 dark:bg-indigo-500/20 text-indigo-900 dark:text-indigo-100 p-2.5 rounded-xl rounded-br-sm self-end max-w-[85%] text-xs">${promptValue}</div>`;
+            promptInput.value = "";
+            chatOut.scrollTop = chatOut.scrollHeight;
+
+            // Add Loading Bubble
+            const loadingId = "load-" + Date.now();
+            chatOut.innerHTML += `<div id="${loadingId}" class="bg-zinc-100 dark:bg-zinc-800 p-2.5 rounded-xl rounded-bl-sm self-start flex gap-1 items-center"><div class="w-1.5 h-1.5 bg-zinc-400 rounded-full animate-pulse"></div><div class="w-1.5 h-1.5 bg-zinc-400 rounded-full animate-pulse" style="animation-delay: 0.2s"></div><div class="w-1.5 h-1.5 bg-zinc-400 rounded-full animate-pulse" style="animation-delay: 0.4s"></div></div>`;
+            chatOut.scrollTop = chatOut.scrollHeight;
+
+            try {
+                const response = await fetch("/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ prompt: promptValue }),
+                });
+                const data = await response.json();
+                
+                document.getElementById(loadingId).remove();
+                
+                // Add AI Message
+                const msg = data.response || "Error: " + data.error;
+                chatOut.innerHTML += `<div class="bg-zinc-100 dark:bg-zinc-800 p-2.5 rounded-xl rounded-bl-sm self-start max-w-[90%] whitespace-pre-wrap text-[11px] leading-relaxed">${msg}</div>`;
+            } catch (err) {
+                document.getElementById(loadingId).remove();
+                chatOut.innerHTML += `<div class="bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400 p-2.5 rounded-xl rounded-bl-sm self-start max-w-[90%] text-xs">Network Error</div>`;
+            }
+            chatOut.scrollTop = chatOut.scrollHeight;
+        }
     </script>
+
+    <!-- Floating Chat Window -->
+    <div id="floating-chat" class="fixed bottom-24 right-6 w-80 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-2xl flex flex-col hidden z-50 overflow-hidden transition-all duration-300 transform">
+        <div class="px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center bg-zinc-50/50 dark:bg-zinc-800/30">
+            <div class="flex items-center gap-2">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" class="text-indigo-500" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                <span class="text-xs font-semibold text-zinc-900 dark:text-zinc-100">Mistral Assistant</span>
+            </div>
+            <button onclick="toggleChat()" class="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div id="chat-output" class="flex-1 p-4 overflow-y-auto custom-scroll text-sm text-zinc-700 dark:text-zinc-300 min-h-[300px] max-h-[400px] flex flex-col gap-3">
+            <div class="text-[10px] text-zinc-500 text-center uppercase tracking-widest">Chat session started</div>
+        </div>
+        <div class="p-3 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-800/50">
+            <div class="relative">
+                <input type="text" id="chat-prompt" placeholder="Ask anything..." class="w-full bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-700 rounded-xl py-2 pl-3 pr-10 text-sm focus:ring-1 focus:ring-indigo-500 outline-none text-zinc-900 dark:text-zinc-100" onkeypress="if(event.key === 'Enter') generalChat()"/>
+                <button onclick="generalChat()" class="absolute right-2 top-1.5 text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 p-1">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" class="text-indigo-500" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Chat Button -->
+    <button onclick="toggleChat()" class="fixed bottom-6 right-6 w-14 h-14 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full flex justify-center items-center shadow-lg transition-transform hover:scale-105 z-50">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-white" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+    </button>
 </body>
 </html>
