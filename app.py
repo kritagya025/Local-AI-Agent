@@ -34,37 +34,46 @@ def index():
 def generate_code():
     data = request.json
     user_prompt = data.get('prompt')
+    mode = data.get('mode', 'smart')
+    
     if not user_prompt:
         return jsonify({"error": "No prompt provided"}), 400
     
     # Prompt style: "You are an expert software engineer. Write code for the following request."
     ai_prompt = f"You are an expert software engineer. Write code for the following request: {user_prompt}"
     
-    response = ask_ai(ai_prompt, "code_gen")
+    task_type = "coding_fast" if mode == "fast" else "coding_smart"
+    response = ask_ai(ai_prompt, task_type)
     return jsonify({"response": response})
 
 @app.route('/debug-code', methods=['POST'])
 def debug_code():
     data = request.json
     code = data.get('code')
+    mode = data.get('mode', 'smart')
+    
     if not code:
         return jsonify({"error": "No code provided"}), 400
     
     ai_prompt = f"You are an expert programmer. Find errors in this code and explain them: \n\n{code}"
     
-    response = ask_ai(ai_prompt, "code_debug")
+    task_type = "coding_fast" if mode == "fast" else "coding_smart"
+    response = ask_ai(ai_prompt, task_type)
     return jsonify({"response": response})
 
 @app.route('/explain-code', methods=['POST'])
 def explain_code():
     data = request.json
     code = data.get('code')
+    mode = data.get('mode', 'smart')
+    
     if not code:
         return jsonify({"error": "No code provided"}), 400
     
     ai_prompt = f"Explain how this code works step by step: \n\n{code}"
     
-    response = ask_ai(ai_prompt, "code_explain")
+    task_type = "coding_fast" if mode == "fast" else "coding_smart"
+    response = ask_ai(ai_prompt, task_type)
     return jsonify({"response": response})
 
 @app.route('/summarize-document', methods=['POST'])

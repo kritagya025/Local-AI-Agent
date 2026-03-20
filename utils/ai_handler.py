@@ -7,7 +7,8 @@ OLLAMA_API_URL = "http://localhost:11434/api/generate"
 
 # Models
 MODELS = {
-    "coding": "deepseek-coder:6.7b",
+    "coding_smart": "deepseek-coder:6.7b",
+    "coding_fast": "codellama",
     "document": "mistral"
 }
 
@@ -34,15 +35,19 @@ def ask_ai(prompt, task_type):
     Sends a prompt to Ollama after ensuring the correct model is used.
     """
     # Determine which model to use and which to stop
-    if task_type in ["code_gen", "code_debug", "code_explain"]:
-        target_model = MODELS["coding"]
-        other_model = MODELS["document"]
+    if task_type == "coding_smart":
+        target_model = MODELS["coding_smart"]
+        other_models = [MODELS["coding_fast"], MODELS["document"]]
+    elif task_type == "coding_fast":
+        target_model = MODELS["coding_fast"]
+        other_models = [MODELS["coding_smart"], MODELS["document"]]
     else:
         target_model = MODELS["document"]
-        other_model = MODELS["coding"]
+        other_models = [MODELS["coding_smart"], MODELS["coding_fast"]]
 
-    # 1. Stop the unused model
-    stop_model(other_model)
+    # 1. Stop the unused models
+    for model in other_models:
+        stop_model(model)
 
     # 2. Preparation for request
     # Note: Ollama will automatically load the target_model when we call the API.
