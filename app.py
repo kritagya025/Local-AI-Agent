@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import os
 import atexit
+import speech_recognition as sr
 from utils.ai_handler import ask_ai, MODELS, stop_model
 from utils.pdf_reader import extract_text
 
@@ -123,6 +124,29 @@ def ask_question():
         
         response = ask_ai(ai_prompt, "doc_qa")
         return jsonify({"response": response})
+
+@app.route('/transcribe', methods=['POST'])
+def transcribe():
+    if 'audio' not in request.files:
+        return jsonify({"error": "No audio file uploaded"}), 400
+    
+    file = request.files['audio']
+    if file.filename == '':
+        return jsonify({"error": "Empty file"}), 400
+        
+    recognizer = sr.Recognizer()
+    try:
+        with sr.AudioFile(file) as source:
+            audio_data = recognizer.record(source)
+            # Use lightweight offline PocketSphinx model
+            text = recognizer.recognize_sphinx(audio_data)
+            return jsonify({"response": text})
+    except sr.UnknownValueError:
+        return jsonify({"error": "Could not understand audio"}), 400
+    except sr.RequestError as e:
+        return jsonify({"error": f"Speech Recognition API Error: {e}"}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/chat', methods=['POST'])
 def chat():
