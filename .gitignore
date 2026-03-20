@@ -8,3 +8,9 @@ temp_code/*
 !temp_code/.gitkeep
 server.log
 .DS_Store
+
+# Electron
+node_modules/
+electron-app/dist/
+npm-debug.log*
+
