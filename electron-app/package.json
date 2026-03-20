@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dev": "NODE_ENV=development electron .",
+    "dev": "cross-env NODE_ENV=development electron .",
     "build": "electron-builder",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,7 +16,10 @@
       "output": "dist"
     },
     "linux": {
-      "target": ["AppImage", "deb"]
+      "target": [
+        "AppImage",
+        "deb"
+      ]
     },
     "win": {
       "target": "portable"
@@ -27,6 +30,7 @@
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
+    "cross-env": "^10.1.0",
     "electron": "^41.0.3"
   },
   "dependencies": {

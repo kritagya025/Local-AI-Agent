@@ -9,8 +9,8 @@ temp_code/*
 server.log
 .DS_Store
 
-# Electron
+# Node/Electron
 node_modules/
-electron-app/dist/
-npm-debug.log*
-
+dist/
+build/
+.env

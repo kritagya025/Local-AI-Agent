@@ -1,186 +1,285 @@
-<!doctype html>
-<html lang="en">
-  <head>
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Offline AI Enterprise Assistant</title>
-  </head>
-  <body>
-    <h1>Offline AI Enterprise Assistant</h1>
-    <p>Privacy-focused local AI for your business data.</p>
-    <hr />
+    <title>Enterprise AI | Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { transition: background-color 0.4s ease, color 0.4s ease; }
+        .glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 10px; }
+        .loader {
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        /* Aesthetic Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.02); }
+        }
+        @keyframes float-reverse {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(30px) scale(0.98); }
+        }
+        @keyframes float-horizontal {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            50% { transform: translateX(20px) rotate(10deg); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 0.9; }
+        }
+        .animate-float { animation: float 12s ease-in-out infinite; }
+        .animate-float-delayed { animation: float-reverse 15s ease-in-out infinite; }
+        .animate-float-horizontal { animation: float-horizontal 18s ease-in-out infinite; }
+        .animate-pulse-glow { animation: pulse-glow 6s ease-in-out infinite; }
+    </style>
+</head>
+<body class="bg-[#09090b] text-zinc-100 min-h-screen font-sans selection:bg-indigo-500/30">
 
-    <div id="ai-tool">
-      <h3>Code-Related Tools</h3>
-      <p>Type your code or code generation request below:</p>
-      <textarea
-        id="prompt"
-        rows="8"
-        cols="100"
-        placeholder="Enter request or code here..."
-      ></textarea>
-      <br /><br />
-      <button onclick="generateCode()">Generate Code</button>
-      <button onclick="debugCode()">Debug Code</button>
-      <button onclick="explainCode()">Explain Code</button>
+    <!-- Floating Background Graphics -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <!-- Floating Ambient Blobs, much brighter -->
+        <div class="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-indigo-500/30 blur-[100px] animate-float"></div>
+        <div class="absolute top-2/3 -right-32 w-[35rem] h-[35rem] rounded-full bg-teal-400/25 blur-[120px] animate-float-delayed"></div>
+        <div class="absolute -bottom-32 left-1/4 w-80 h-80 rounded-full bg-purple-500/30 blur-[100px] animate-float-horizontal"></div>
+        
+        <!-- Abstract Geometric Shapes -->
+        <div class="absolute top-[15%] right-[15%] text-zinc-100/20 animate-float-horizontal">
+            <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="4 4">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="12" cy="12" r="5"/>
+            </svg>
+        </div>
+        
+        <div class="absolute bottom-[25%] left-[8%] text-indigo-400/30 animate-float">
+            <svg width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <polygon points="12,2 22,22 2,22" stroke-linejoin="round"/>
+                <polygon points="12,8 18,18 6,18" stroke-linejoin="round"/>
+            </svg>
+        </div>
+
+        <div class="absolute top-[40%] left-[80%] text-teal-400/30 animate-float-delayed">
+             <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke-dasharray="4 4"/>
+                <rect x="7" y="7" width="10" height="10" rx="1" />
+            </svg>
+        </div>
+        
+        <!-- Decorative Grid -->
+        <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,black_20%,transparent_100%)] animate-pulse-glow"></div>
     </div>
 
-    <hr />
+    <nav class="border-b border-zinc-200 dark:border-zinc-800 px-6 py-4 flex justify-between items-center sticky top-0 bg-white/80 dark:bg-[#09090b]/80 glass z-50">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-zinc-900 dark:bg-white rounded-lg flex items-center justify-center">
+                <div class="w-3 h-3 bg-white dark:bg-black rounded-full animate-pulse"></div>
+            </div>
+            <h1 class="text-lg font-semibold tracking-tight">Enterprise <span class="text-zinc-500 font-light">AI</span></h1>
+        </div>
+        
 
-    <div id="doc-tool">
-      <h3>Document-Related Tools</h3>
-      <p>1. Upload PDF for analysis:</p>
-      <input type="file" id="pdfFile" accept=".pdf" />
-      <br /><br />
-      <p>2. Ask a question about the document (optional for summarization):</p>
-      <input
-        type="text"
-        id="question"
-        size="80"
-        placeholder="Type question for the uploaded PDF here..."
-      />
-      <br /><br />
-      <button onclick="summarizeDocument()">Summarize Document</button>
-      <button onclick="askQuestion()">Ask Question About Document</button>
-    </div>
+    </nav>
 
-    <hr />
+    <main class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-8 mt-4 relative z-10">
+        
+        <div class="lg:col-span-4 space-y-6">
+            <div class="p-6 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
+                <h3 class="text-sm font-semibold uppercase tracking-widest text-zinc-400 mb-4">Code Engine</h3>
+                <textarea id="prompt" rows="6" 
+                    class="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-4 text-sm focus:ring-1 focus:ring-zinc-400 outline-none transition-all placeholder:text-zinc-500"
+                    placeholder="Describe functionality or paste code..."></textarea>
+                
+                <div class="grid grid-cols-1 gap-2 mt-4">
+                    <button onclick="generateCode()" class="w-full py-2.5 bg-zinc-900 dark:bg-white text-white dark:text-black rounded-lg text-sm font-medium hover:opacity-90 transition-all">Generate</button>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="debugCode()" class="py-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg text-xs font-medium hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all">Debug</button>
+                        <button onclick="explainCode()" class="py-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg text-xs font-medium hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all">Explain</button>
+                    </div>
+                </div>
+            </div>
 
-    <div id="loading" style="display: none; color: blue">
-      <b>Processing your request... please wait. AI model is being loaded.</b>
-    </div>
+            <div class="p-6 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-sm">
+                <h3 class="text-sm font-semibold uppercase tracking-widest text-zinc-400 mb-4">Document Matrix</h3>
+                <div class="space-y-4">
+                    <div class="relative group">
+                        <input type="file" id="pdfFile" accept=".pdf" class="hidden" onchange="updateFileName(this)" />
+                        <label for="pdfFile" class="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-xl cursor-pointer hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-all">
+                            <span id="file-label" class="text-xs text-zinc-500">Drop PDF here or click</span>
+                        </label>
+                    </div>
+                    <input type="text" id="question" 
+                        class="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl p-3 text-sm focus:ring-1 focus:ring-zinc-400 outline-none"
+                        placeholder="Ask about document..."/>
+                    <div class="flex gap-2">
+                        <button onclick="summarizeDocument()" class="flex-1 py-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg text-xs font-medium hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-all">Summarize</button>
+                        <button onclick="askQuestion()" class="flex-1 py-2 bg-zinc-900 dark:bg-zinc-100 text-white dark:text-black rounded-lg text-xs font-medium hover:opacity-80 transition-all">Query</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div id="result-container">
-      <h3>AI Response:</h3>
-      <p
-        id="response-output"
-        style="
-          white-space: pre-wrap;
-          font-family: monospace;
-          border: 1px solid #ccc;
-          padding: 10px;
-        "
-      ></p>
-    </div>
+        <div class="lg:col-span-8 flex flex-col h-[calc(100vh-140px)]">
+            <div class="flex-1 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-zinc-800 shadow-xl overflow-hidden flex flex-col">
+                <div class="px-6 py-3 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center bg-zinc-50/50 dark:bg-zinc-800/30">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2 h-2 rounded-full bg-zinc-300 dark:bg-zinc-700"></div>
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Output Console</span>
+                    </div>
+                    <div id="loading" class="hidden flex items-center gap-2">
+                        <div class="w-3 h-3 border-2 loader rounded-full border-zinc-400"></div>
+                        <span class="text-[10px] text-zinc-400 animate-pulse">Processing...</span>
+                    </div>
+                </div>
+                
+                <div class="flex-1 p-8 overflow-y-auto custom-scroll font-mono text-sm leading-relaxed">
+                    <p id="response-output" class="whitespace-pre-wrap text-zinc-700 dark:text-zinc-300"></p>
+                </div>
+
+                <div class="px-6 py-3 border-t border-zinc-200 dark:border-zinc-800 text-[10px] text-zinc-400 flex justify-between">
+                    <span>Ready for command</span>
+                    <span class="italic font-mono">Privacy Node: Active</span>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <script>
-      async function fetchAI(endpoint, body) {
-        const loading = document.getElementById("loading");
-        const output = document.getElementById("response-output");
+        // UI Enhancements
 
-        loading.style.display = "block";
-        output.innerText = "";
-
-        try {
-          const response = await fetch(endpoint, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
-          });
-
-          const text = await response.text();
-          let data;
-          try {
-            data = JSON.parse(text);
-          } catch (e) {
-            output.innerText = "Error: Invalid response from server. " + text;
-            return;
-          }
-
-          if (data.error) {
-            output.innerText = "Error: " + data.error;
-          } else {
-            output.innerText = data.response;
-          }
-        } catch (err) {
-          output.innerText = "Network Error: " + err;
-        } finally {
-          loading.style.display = "none";
-        }
-      }
-
-      function generateCode() {
-        const promptValue = document.getElementById("prompt").value;
-        fetchAI("/generate-code", { prompt: promptValue });
-      }
-
-      function debugCode() {
-        const promptValue = document.getElementById("prompt").value;
-        fetchAI("/debug-code", { code: promptValue });
-      }
-
-      function explainCode() {
-        const promptValue = document.getElementById("prompt").value;
-        fetchAI("/explain-code", { code: promptValue });
-      }
-
-      async function summarizeDocument() {
-        const loading = document.getElementById("loading");
-        const output = document.getElementById("response-output");
-        const fileInput = document.getElementById("pdfFile");
-
-        if (!fileInput.files[0]) {
-          alert("Please select a PDF file first.");
-          return;
+        function updateFileName(input) {
+            const label = document.getElementById('file-label');
+            label.innerText = input.files[0] ? `Selected: ${input.files[0].name}` : "Drop PDF here or click";
+            label.classList.add('text-zinc-900', 'dark:text-zinc-100');
         }
 
-        loading.style.display = "block";
-        output.innerText = "";
+        // Original Logic (Unchanged as requested)
+        async function fetchAI(endpoint, body) {
+            const loading = document.getElementById("loading");
+            const output = document.getElementById("response-output");
 
-        const formData = new FormData();
-        formData.append("file", fileInput.files[0]);
+            loading.style.display = "flex";
+            output.innerText = "";
 
-        try {
-          const response = await fetch("/summarize-document", {
-            method: "POST",
-            body: formData,
-          });
-          const data = await response.json();
-          output.innerText = data.response || "Error: " + data.error;
-        } catch (err) {
-          output.innerText = "Network Error: " + err;
-        } finally {
-          loading.style.display = "none";
+            try {
+                const response = await fetch(endpoint, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body),
+                });
+
+                const text = await response.text();
+                let data;
+                try {
+                    data = JSON.parse(text);
+                } catch (e) {
+                    output.innerText = "Error: Invalid response from server. " + text;
+                    return;
+                }
+
+                if (data.error) {
+                    output.innerText = "Error: " + data.error;
+                } else {
+                    output.innerText = data.response;
+                }
+            } catch (err) {
+                output.innerText = "Network Error: " + err;
+            } finally {
+                loading.style.display = "none";
+            }
         }
-      }
 
-      async function askQuestion() {
-        const loading = document.getElementById("loading");
-        const output = document.getElementById("response-output");
-        const fileInput = document.getElementById("pdfFile");
-        const questionInput = document.getElementById("question");
-
-        if (!fileInput.files[0]) {
-          alert("Please select a PDF file first.");
-          return;
-        }
-        if (!questionInput.value) {
-          alert("Please enter a question.");
-          return;
+        function generateCode() {
+            const promptValue = document.getElementById("prompt").value;
+            fetchAI("/generate-code", { prompt: promptValue });
         }
 
-        loading.style.display = "block";
-        output.innerText = "";
-
-        const formData = new FormData();
-        formData.append("file", fileInput.files[0]);
-        formData.append("question", questionInput.value);
-
-        try {
-          const response = await fetch("/ask-question", {
-            method: "POST",
-            body: formData,
-          });
-          const data = await response.json();
-          output.innerText = data.response || "Error: " + data.error;
-        } catch (err) {
-          output.innerText = "Network Error: " + err;
-        } finally {
-          loading.style.display = "none";
+        function debugCode() {
+            const promptValue = document.getElementById("prompt").value;
+            fetchAI("/debug-code", { code: promptValue });
         }
-      }
+
+        function explainCode() {
+            const promptValue = document.getElementById("prompt").value;
+            fetchAI("/explain-code", { code: promptValue });
+        }
+
+        async function summarizeDocument() {
+            const loading = document.getElementById("loading");
+            const output = document.getElementById("response-output");
+            const fileInput = document.getElementById("pdfFile");
+
+            if (!fileInput.files[0]) {
+                alert("Please select a PDF file first.");
+                return;
+            }
+
+            loading.style.display = "flex";
+            output.innerText = "";
+
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+
+            try {
+                const response = await fetch("/summarize-document", {
+                    method: "POST",
+                    body: formData,
+                });
+                const data = await response.json();
+                output.innerText = data.response || "Error: " + data.error;
+            } catch (err) {
+                output.innerText = "Network Error: " + err;
+            } finally {
+                loading.style.display = "none";
+            }
+        }
+
+        async function askQuestion() {
+            const loading = document.getElementById("loading");
+            const output = document.getElementById("response-output");
+            const fileInput = document.getElementById("pdfFile");
+            const questionInput = document.getElementById("question");
+
+            if (!fileInput.files[0]) { alert("Please select a PDF file first."); return; }
+            if (!questionInput.value) { alert("Please enter a question."); return; }
+
+            loading.style.display = "flex";
+            output.innerText = "";
+
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+            formData.append("question", questionInput.value);
+
+            try {
+                const response = await fetch("/ask-question", {
+                    method: "POST",
+                    body: formData,
+                });
+                const data = await response.json();
+                output.innerText = data.response || "Error: " + data.error;
+            } catch (err) {
+                output.innerText = "Network Error: " + err;
+            } finally {
+                loading.style.display = "none";
+            }
+        }
     </script>
-  </body>
+</body>
 </html>
