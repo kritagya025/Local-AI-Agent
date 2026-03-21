@@ -4,13 +4,21 @@ A privacy-focused AI assistant that runs **completely offline** using **Ollama**
 
 ---
 
+## 🌐 Live Landing Page
+
+Users can download the desktop application from our live site:
+👉 **[Download Offline AI Assistant](https://hj-anand.github.io/Local-AI-Agent/download-site/)**
+
+---
+
 ## 🚀 Features
 
 - **💻 Code Wizard:** Generate, debug, and explain code using `deepseek-coder:6.7b`.
 - **📄 Document Intelligence:** Upload PDFs for instant summaries or ask specific questions using `mistral`.
+- **🎙️ Voice Commands:** Interact with the AI using your voice (Powered by offline SpeechRecognition).
 - **🔒 Privacy First:** No cloud APIs, no data collection. Everything stays on your hardware.
-- **�️ Desktop App:** Now available as a native Electron desktop application.
-- **�🐏 Memory Optimized:** Automatically manages model switching to save RAM.
+- ** ️ Desktop App:** Now available as a native Electron desktop application.
+- ** 🐏 Memory Optimized:** Automatically manages model switching to save RAM.
 
 ---
 
@@ -25,7 +33,6 @@ Before you start, ensure you have the following installed:
     - **Linux**: Run `curl -fsSL https://ollama.com/install.sh | sh`
 
 ---
-
 
 ## 📦 Installation & Setup
 
@@ -54,6 +61,7 @@ source venv/bin/activate
 ```bash
 # Install backend dependencies
 pip install -r requirements.txt
+pip install SpeechRecognition pocketsphinx
 
 # Install desktop app dependencies
 cd electron-app
@@ -127,8 +135,10 @@ This project is optimized for machines with limited RAM (e.g., 8GB or 16GB).
 - `app.py`: Flask server and API endpoints.
 - `index.html`: Modern, interactive frontend.
 - `electron-app/`: Electron desktop application files.
+- `download-site/`: Landing page for web-based app distribution.
 - `utils/`:
   - `ai_handler.py`: Logic for model switching and Ollama API communication.
   - `pdf_reader.py`: PDF text extraction logic.
 - `uploads/`: Temporary storage for uploaded documents.
 - `ELECTRON_SETUP.md`: Detailed guide for Electron configuration.
+- `requirements.txt`: Python package dependencies.

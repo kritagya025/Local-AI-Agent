@@ -1,0 +1,87 @@
+:root {
+  --bg-color: #0f172a;
+  --text-color: #f8fafc;
+  --accent-color: #38bdf8;
+  --secondary-color: #1e293b;
+  --button-hover: #0ea5e9;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg-color);
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+    radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+    radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+  color: var(--text-color);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: center;
+}
+
+nav { width: 100%; padding: 2rem; text-align: center; }
+.logo { font-size: 1.5rem; font-weight: bold; color: var(--accent-color); }
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 1000px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.hero { margin-bottom: 3rem; }
+h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, #fff, var(--accent-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tagline { font-size: 1.5rem; color: var(--accent-color); margin-bottom: 1.5rem; }
+.description { font-size: 1.2rem; margin-bottom: 3rem; max-width: 700px; opacity: 0.9; }
+
+.download-container { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+.download-btn {
+  background-color: var(--accent-color);
+  color: var(--bg-color);
+  text-decoration: none;
+  padding: 1.25rem 3rem;
+  border-radius: 1rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(56, 189, 248, 0.2);
+}
+.download-btn:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 15px -3px rgba(56, 189, 248, 0.3);
+}
+
+.features { display: flex; gap: 2rem; margin-top: 5rem; width: 100%; }
+.feature-card {
+  background-color: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(8px);
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex: 1;
+  transition: all 0.3s ease;
+}
+.feature-card:hover { transform: translateY(-10px); border-color: var(--accent-color); }
+
+footer { width: 100%; padding: 3rem; text-align: center; opacity: 0.5; font-size: 0.9rem; }
+@media (max-width: 768px) { h1 { font-size: 2.5rem; } .features { flex-direction: column; } }
