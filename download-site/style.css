@@ -1,87 +1,160 @@
-:root {
-  --bg-color: #0f172a;
-  --text-color: #f8fafc;
-  --accent-color: #38bdf8;
-  --secondary-color: #1e293b;
-  --button-hover: #0ea5e9;
+/* =============================================
+   Offline AI Download Site — Custom Styles
+   Black & Grey Dark Theme
+   ============================================= */
+
+/* ---------- Animated Background Blobs ---------- */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.35;
+  animation: blobMove 18s ease-in-out infinite alternate;
+  will-change: transform;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.blob-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(161, 161, 170, 0.2), transparent 70%);
+  top: -10%;
+  left: -8%;
+  animation-duration: 20s;
 }
 
-body {
-  font-family: "Inter", sans-serif;
-  background-color: var(--bg-color);
-  background-image: 
-    radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-    radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
-    radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
-  color: var(--text-color);
-  line-height: 1.6;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  align-items: center;
+.blob-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(113, 113, 122, 0.2), transparent 70%);
+  top: 20%;
+  right: -10%;
+  animation-duration: 24s;
+  animation-delay: -5s;
 }
 
-nav { width: 100%; padding: 2rem; text-align: center; }
-.logo { font-size: 1.5rem; font-weight: bold; color: var(--accent-color); }
-
-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  max-width: 1000px;
-  padding: 2rem;
-  text-align: center;
+.blob-3 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(82, 82, 91, 0.25), transparent 70%);
+  bottom: -5%;
+  left: 30%;
+  animation-duration: 22s;
+  animation-delay: -10s;
 }
 
-.hero { margin-bottom: 3rem; }
-h1 {
-  font-size: 3.5rem;
-  margin-bottom: 1rem;
-  background: linear-gradient(to right, #fff, var(--accent-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+@keyframes blobMove {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(40px, -30px) scale(1.08);
+  }
+  66% {
+    transform: translate(-20px, 25px) scale(0.95);
+  }
+  100% {
+    transform: translate(15px, -15px) scale(1.03);
+  }
 }
 
-.tagline { font-size: 1.5rem; color: var(--accent-color); margin-bottom: 1.5rem; }
-.description { font-size: 1.2rem; margin-bottom: 3rem; max-width: 700px; opacity: 0.9; }
+/* ---------- Grid Overlay ---------- */
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 30%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 30%, transparent 100%);
+}
 
-.download-container { display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+/* ---------- Download Button Shimmer ---------- */
 .download-btn {
-  background-color: var(--accent-color);
-  color: var(--bg-color);
-  text-decoration: none;
-  padding: 1.25rem 3rem;
-  border-radius: 1rem;
-  font-weight: 700;
-  font-size: 1.2rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px -1px rgba(56, 189, 248, 0.2);
-}
-.download-btn:hover {
-  background-color: var(--button-hover);
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 10px 15px -3px rgba(56, 189, 248, 0.3);
+  position: relative;
+  overflow: hidden;
 }
 
-.features { display: flex; gap: 2rem; margin-top: 5rem; width: 100%; }
+.shimmer-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.3) 45%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0.3) 55%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2.5s linear infinite;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ---------- Feature Card Glow ---------- */
 .feature-card {
-  background-color: rgba(30, 41, 59, 0.5);
-  backdrop-filter: blur(8px);
-  padding: 2.5rem;
-  border-radius: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  flex: 1;
-  transition: all 0.3s ease;
+  overflow: hidden;
 }
-.feature-card:hover { transform: translateY(-10px); border-color: var(--accent-color); }
 
-footer { width: 100%; padding: 3rem; text-align: center; opacity: 0.5; font-size: 0.9rem; }
-@media (max-width: 768px) { h1 { font-size: 2.5rem; } .features { flex-direction: column; } }
+.card-glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(
+    400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(161, 161, 170, 0.06),
+    transparent 60%
+  );
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.feature-card:hover .card-glow {
+  opacity: 1;
+}
+
+/* ---------- Smooth scroll & selection ---------- */
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: rgba(161, 161, 170, 0.3);
+  color: #fff;
+}
+
+/* ---------- Custom scrollbar ---------- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* ---------- Responsive adjustments ---------- */
+@media (max-width: 640px) {
+  .blob {
+    filter: blur(70px);
+    opacity: 0.2;
+  }
+
+  .blob-1 { width: 350px; height: 350px; }
+  .blob-2 { width: 300px; height: 300px; }
+  .blob-3 { width: 280px; height: 280px; }
+}

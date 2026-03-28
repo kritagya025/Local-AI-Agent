@@ -4,52 +4,186 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Offline AI Assistant | Download</title>
+    <meta name="description" content="Download Offline AI Assistant — a privacy-first, fully offline intelligent workspace that runs entirely on your hardware." />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a1a1aa' stroke-width='2'%3E%3Cpath d='M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z'/%3E%3C/svg%3E" />
+    <!-- Tailwind CDN for development; use CLI build for production -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+            },
+            colors: {
+              dark: { 900: '#09090b', 800: '#111113', 700: '#18181b', 600: '#27272a' },
+              accent: { DEFAULT: '#a1a1aa', hover: '#d4d4d8', glow: 'rgba(161,161,170,0.25)' },
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+              'fade-up': 'fadeUp 0.8s ease-out forwards',
+              'fade-up-delay': 'fadeUp 0.8s ease-out 0.15s forwards',
+              'fade-up-delay-2': 'fadeUp 0.8s ease-out 0.3s forwards',
+              'fade-up-delay-3': 'fadeUp 0.8s ease-out 0.45s forwards',
+              'shimmer': 'shimmer 2.5s linear infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-12px)' },
+              },
+              pulseGlow: {
+                '0%, 100%': { boxShadow: '0 0 20px rgba(161,161,170,0.1)' },
+                '50%': { boxShadow: '0 0 40px rgba(161,161,170,0.2)' },
+              },
+              fadeUp: {
+                from: { opacity: '0', transform: 'translateY(30px)' },
+                to: { opacity: '1', transform: 'translateY(0)' },
+              },
+              shimmer: {
+                '0%': { backgroundPosition: '-200% 0' },
+                '100%': { backgroundPosition: '200% 0' },
+              }
+            },
+          },
+        },
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <header>
-      <nav>
-        <div class="logo">Offline AI</div>
+  <body class="bg-dark-900 text-zinc-100 font-sans min-h-screen flex flex-col antialiased overflow-x-hidden">
+
+    <!-- Animated background blobs -->
+    <div class="fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+      <div class="grid-overlay"></div>
+    </div>
+
+    <!-- Navbar -->
+    <header class="w-full backdrop-blur-md bg-dark-900/70 border-b border-zinc-800/80 sticky top-0 z-50">
+      <nav class="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-zinc-400 to-zinc-600 flex items-center justify-center shadow-lg shadow-black/30">
+            <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"/>
+            </svg>
+          </div>
+          <span class="text-xl font-bold tracking-tight bg-gradient-to-r from-white to-zinc-500 bg-clip-text text-transparent">Offline AI</span>
+        </div>
+        <a href="https://github.com/HJ-ANAND/Local-AI-Agent" target="_blank" rel="noopener" class="flex items-center gap-2 text-sm text-zinc-500 hover:text-white transition-colors duration-300">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          GitHub
+        </a>
       </nav>
     </header>
 
-    <main>
-      <section class="hero">
-        <h1>Offline AI Assistant</h1>
-        <p class="tagline">Your Privacy-First Intelligent Workspace</p>
-        <p class="description">
-          Experience powerful AI assistance entirely on your hardware. No cloud,
-          no data theft, just pure local intelligence.
+    <!-- Hero Section -->
+    <main class="flex-1 flex flex-col items-center justify-center w-full">
+      <section class="max-w-4xl mx-auto px-6 pt-20 pb-12 text-center">
+        <!-- Badge -->
+        <div class="opacity-0 animate-fade-up inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border border-zinc-700 bg-zinc-800/50 text-zinc-300 text-sm font-medium">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-zinc-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-zinc-400"></span>
+          </span>
+          v1.0.0 — Now Available
+        </div>
+
+        <!-- Heading -->
+        <h1 class="opacity-0 animate-fade-up-delay text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6">
+          <span class="bg-gradient-to-r from-white via-zinc-300 to-zinc-500 bg-clip-text text-transparent">Offline AI</span><br/>
+          <span class="bg-gradient-to-r from-zinc-300 via-zinc-400 to-zinc-600 bg-clip-text text-transparent">Assistant</span>
+        </h1>
+
+        <!-- Tagline -->
+        <p class="opacity-0 animate-fade-up-delay-2 text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+          Your <span class="text-white font-semibold">privacy-first</span> intelligent workspace.
+          Experience powerful AI assistance entirely on your hardware —
+          <span class="text-zinc-200 font-medium">no cloud, no data leaks</span>, just pure local intelligence.
         </p>
-        <div class="download-container">
+
+        <!-- Download Button -->
+        <div class="opacity-0 animate-fade-up-delay-3 flex flex-col items-center gap-4">
           <a
             href="https://github.com/HJ-ANAND/Local-AI-Agent/releases/latest/download/Offline.AI.Assistant.exe"
-            class="download-btn"
+            class="download-btn group relative inline-flex items-center gap-3 px-8 py-4 rounded-2xl bg-gradient-to-r from-zinc-200 to-white text-dark-900 text-lg font-bold shadow-xl shadow-black/30 transition-all duration-300 hover:shadow-2xl hover:shadow-zinc-500/30 hover:-translate-y-1 hover:scale-[1.03] active:scale-[0.98]"
             id="download-link"
-            >Download for Windows</a
           >
-          <p class="version">Version 1.0.0 | .exe installer</p>
+            <svg class="w-6 h-6 transition-transform duration-300 group-hover:animate-float" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+            </svg>
+            Download for Windows
+            <span class="shimmer-overlay"></span>
+          </a>
+          <div class="flex items-center gap-3 text-sm text-zinc-500">
+            <span class="flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+              Verified Safe
+            </span>
+            <span class="w-1 h-1 rounded-full bg-zinc-700"></span>
+            <span>Version 1.0.0</span>
+            <span class="w-1 h-1 rounded-full bg-zinc-700"></span>
+            <span>.exe installer</span>
+          </div>
         </div>
       </section>
 
-      <section class="features">
-        <div class="feature-card">
-          <h3>Privacy First</h3>
-          <p>Data never leaves your machine.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Fully Offline</h3>
-          <p>Works without an internet connection.</p>
-        </div>
-        <div class="feature-card">
-          <h3>Fast & Secure</h3>
-          <p>Optimized for local performance.</p>
+      <!-- Features Section -->
+      <section class="max-w-5xl mx-auto px-6 py-16 w-full">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Card 1 -->
+          <div class="feature-card group relative rounded-2xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-xl p-8 transition-all duration-500 hover:border-zinc-600 hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/30">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-zinc-600/30 to-zinc-700/10 border border-zinc-700 flex items-center justify-center mb-5 transition-transform duration-500 group-hover:scale-110">
+              <svg class="w-6 h-6 text-zinc-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Privacy First</h3>
+            <p class="text-zinc-500 text-sm leading-relaxed">Your data never leaves your machine. Everything runs locally with zero external connections.</p>
+            <div class="card-glow"></div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="feature-card group relative rounded-2xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-xl p-8 transition-all duration-500 hover:border-zinc-600 hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/30">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-zinc-600/30 to-zinc-700/10 border border-zinc-700 flex items-center justify-center mb-5 transition-transform duration-500 group-hover:scale-110">
+              <svg class="w-6 h-6 text-zinc-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Fully Offline</h3>
+            <p class="text-zinc-500 text-sm leading-relaxed">Works without an internet connection. No cloud dependencies, no API keys needed.</p>
+            <div class="card-glow"></div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="feature-card group relative rounded-2xl border border-zinc-800 bg-zinc-900/50 backdrop-blur-xl p-8 transition-all duration-500 hover:border-zinc-600 hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/30">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-zinc-600/30 to-zinc-700/10 border border-zinc-700 flex items-center justify-center mb-5 transition-transform duration-500 group-hover:scale-110">
+              <svg class="w-6 h-6 text-zinc-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-2">Fast & Secure</h3>
+            <p class="text-zinc-500 text-sm leading-relaxed">Optimized for blazing-fast local performance with enterprise-grade security built in.</p>
+            <div class="card-glow"></div>
+          </div>
         </div>
       </section>
     </main>
 
-    <footer>
-      <p>&copy; 2026 Offline AI Project. All rights reserved.</p>
+    <!-- Footer -->
+    <footer class="w-full border-t border-zinc-800/80 py-8">
+      <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-sm text-zinc-600">&copy; 2026 Offline AI Project. All rights reserved.</p>
+        <div class="flex items-center gap-4">
+          <a href="https://github.com/HJ-ANAND/Local-AI-Agent" target="_blank" rel="noopener" class="text-sm text-zinc-600 hover:text-white transition-colors duration-300">GitHub</a>
+        </div>
+      </div>
     </footer>
 
     <script src="script.js"></script>
